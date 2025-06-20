@@ -74,7 +74,7 @@ make -j$(nproc --all) O=out \
                       NM=llvm-nm \
                       OBJCOPY=llvm-objcopy \
                       OBJDUMP=llvm-objdump \
-                      STRIP=llvm-strip
+                      STRIP=llvm-strip 2> e.log
 
 echo "**** Verify target files ****"
 if [ ! -f "$IMAGE_GZ" ]; then
