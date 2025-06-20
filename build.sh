@@ -34,6 +34,9 @@ else
 
 fi
 
+#remove log file
+rm e.log
+
 KERNEL_DEFCONFIG=phoenix_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 KERNELDIR=$PWD/
@@ -69,7 +72,6 @@ make -j$(nproc --all) O=out \
                       ARCH=arm64 \
                       CC=clang \
                       CROSS_COMPILE=aarch64-linux-gnu- \
-                      CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
                       CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
                       NM=llvm-nm \
                       OBJCOPY=llvm-objcopy \
