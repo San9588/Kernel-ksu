@@ -1,9 +1,13 @@
 echo checking for repo update
-git config pull.rebase false
-git pull
+#git config pull.rebase false
+#git pull
 
 #clone or update clang and AnyKernel3 if its alreay exists
 set -e
+if [ -z "$(ls -A KernelSU-Next 2>/dev/null)" ]; then
+    echo ">> KernelSU-Next is empty. Initializing submodules..."
+    git submodule update --init --recursive
+fi
 
 if [ -r AnyKernel3 ]; then
   echo AnyKernel3 found!
