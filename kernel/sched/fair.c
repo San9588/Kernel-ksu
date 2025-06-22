@@ -13315,4 +13315,15 @@ void check_for_migration(struct rq *rq, struct task_struct *p)
 	}
 }
 
+bool sched_energy_aware = true;
+
+static int __init sched_energy_aware_setup(char *str)
+{
+	sched_energy_aware = true;
+	return 1;
+}
+__setup("sched_energy_aware", sched_energy_aware_setup);
+
+module_param_named(sched_energy_aware, sched_energy_aware, bool, 0644);
+
 #endif /* CONFIG_SCHED_WALT */
