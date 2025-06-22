@@ -6501,6 +6501,21 @@ err_alloc_shrinker_failed:
 	return ret;
 }
 
+
+extern struct file_system_type binder_fs_type;
+
+static void __init binder_binderfs_init(void)
+{
+    int ret;
+
+    ret = register_filesystem(&binder_fs_type);
+    if (ret)
+        pr_err("binderfs: failed to register binderfs (%d)\n", ret);
+    else
+        pr_info("binderfs: filesystem registered\n");
+}
+
+
 device_initcall(binder_init);
 
 #define CREATE_TRACE_POINTS
