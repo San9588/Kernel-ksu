@@ -121,4 +121,3 @@ echo "Check out/$FINAL_KERNEL_ZIP"
 git reset --soft HEAD~1
 git reset
 
-

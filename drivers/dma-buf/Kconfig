@@ -40,37 +40,4 @@ config DEBUG_DMA_BUF_REF
 	  matching the get/put call stacks.  This feature consumes extra memory
 	  in order to save the stack traces using STACKDEPOT.
 
-config DMA_HEAP
-    bool "DMA-BUF Heaps"
-    depends on DMA_SHARED_BUFFER
-    default n
-
-config DMABUF_HEAPS_SYSTEM
-    bool "System heap for DMA-BUF Heaps"
-    depends on DMA_HEAP
-    default n
-    help
-      Enable a system heap to allocate pages via alloc_pages.
-
-config DMABUF_HEAPS_CARVEOUT
-    bool "Carveout heap for DMA-BUF Heaps"
-    depends on DMA_HEAP
-    default n
-    help
-      Enable a heap that allocates from a statically defined carveout memory region.
-
-config DMABUF_HEAPS_CMA
-    bool "CMA heap for DMA-BUF Heaps"
-    depends on DMA_HEAP && CMA
-    default n
-    help
-      Enable a heap that uses Contiguous Memory Allocator (CMA) regions.
-
-config DMABUF_HEAPS_PAGE_POOL
-    bool "Enable DMA-BUF page pool reuse"
-    depends on DMA_HEAP
-    default n
-    help
-      Enables a shared page pool across DMA-BUF heaps to reuse freed pages and reduce allocation latency.
-
 endmenu
