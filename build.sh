@@ -4,6 +4,9 @@ echo checking for repo update
 
 #clone or update clang and AnyKernel3 if its alreay exists
 set -e
+
+wd=$(pwd)
+
 if [ -z "$(ls -A KernelSU-Next 2>/dev/null)" ]; then
     echo ">> KernelSU-Next is empty. Initializing submodules..."
     git submodule update --init --recursive
@@ -21,30 +24,29 @@ else
 
 fi
 
-if [ -r clang ]; then
+if [ -d ~/.clang ]; then
   echo clang found!
-  cd clang
+  cd ~/.clang
   git config pull.rebase false
   cd ..
-
-
 else
   echo clang not found!, git cloning it now....
-  git clone --depth=1 https://github.com/kdrag0n/proton-clang.git clang
-
+  git clone --depth=1 https://github.com/kdrag0n/proton-clang.git ~/.clang
 fi
 
+cd "$wd"
+
 #remove log file
-rm e.log
+rm -f e.log
 
 KERNEL_DEFCONFIG=phoenix_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 KERNELDIR=$PWD/
-FINAL_KERNEL_ZIP=Risan-v1.3.0-phoenix.zip
-export PATH="${PWD}/clang/bin:${PATH}"
+FINAL_KERNEL_ZIP=Rudra-X-v1.0.0-phoenix.zip
+export PATH="$HOME/.clang/bin:$PATH"
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_COMPILER_STRING="$(${PWD}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+export KBUILD_COMPILER_STRING="$($HOME/.clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 IMAGE_GZ=$PWD/out/arch/arm64/boot/Image.gz
 DTB=$PWD/out/arch/arm64/boot/dts/qcom/sdmmagpie.dtb
 DTBO_IMG=$PWD/out/arch/arm64/boot/dtbo.img
@@ -110,3 +112,4 @@ rm $ANYKERNEL3_DIR/dtbo.img
 mv -f $ANYKERNEL3_DIR/$FINAL_KERNEL_ZIP out/
 
 echo "Check out/$FINAL_KERNEL_ZIP"
+
